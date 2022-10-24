@@ -1,0 +1,13 @@
+Django
+gunicorn
+azure-storage-blob
+django-storages
+psycopg2
+psycopg2-binary
+pytest-django
+pytest
+tzdata
+black
+pre-commit
+flake8
+factory_boy

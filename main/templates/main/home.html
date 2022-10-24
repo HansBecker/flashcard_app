@@ -1,0 +1,35 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <h1>Collections</h1>
+    <a href="{% url 'create-collection' %}" class="btn btn-primary">Create new collection</a>
+    <table class="table">
+        <thead>
+            <th>Name</th>
+            <th>Date Created</th>
+            <th>Actions</th>
+        </thead>
+        <tbody>
+            {% for collection in collections %}
+            <tr>
+                <td>{{ collection.name }}</td>
+                <td>{{ collection.date_created }}</td>
+                <td class="d-flex">
+                    <a href="{% url 'collection-detail' collection_id=collection.id %}" class="viewlink">View</a>,
+                    <form id="id_delete_{{ collection.id }}" method="post" action="{% url 'delete-collection' pk=collection.id %}">
+                        <a
+                            href="javascript:{}"
+                            onclick="document.getElementById('id_delete_{{ collection.id }}').submit()"
+                            class="link-danger ms-1"
+                        >Delete</a>
+                        {% csrf_token %}
+                        <input type="submit" value="DELETE" hidden>
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

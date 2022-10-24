@@ -1,0 +1,19 @@
+{% extends 'main/base.html' %}
+{% block content %}
+<div class="container">
+    <form id="id_login_form" class="justify-content-center align-content-center" method="post">
+    {% csrf_token %}
+        <div class="mb-3 w-100">
+            <label class="form-label d-block" for="id_email">Email</label>
+            {{ form.email }}
+        </div>
+        <div class="mb-3 w-100">
+            <label class="form-label d-block" for="id_password">Password</label>
+            {{ form.password }}
+        </div>
+        <div>
+            <button class="btn btn-primary">Login</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}

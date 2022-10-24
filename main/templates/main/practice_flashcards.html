@@ -1,0 +1,11 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+<h1>Practice</h1>
+<a href="{% url 'collection-detail' collection_id=deck.collection.id %}" class="link-primary">Back to collection</a>
+<div id="id_question" class="card shadow mb-3">{{ card.question|safe }}</div>
+<div id="id_answer" class="card shadow mb-3" hidden>{{ card.answer|safe }}</div>
+<button id="id_show_answer" class="btn btn-primary">Show answer</button>
+<a href="{% url 'collection-practice-flashcards' collection_id=deck.collection.id deck_id=deck.id %}" id="id_next_question" class="btn btn-primary" hidden>Next question</a>
+<script src="{% static 'js/main/practice_flashcards.js' %}"></script>
+{% endblock content %}

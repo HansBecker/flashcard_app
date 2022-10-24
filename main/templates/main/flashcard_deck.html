@@ -1,0 +1,42 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container">
+    <a href="{% url 'collection-detail' collection_id=deck.collection.id %}" class="link-primary">Back to collection</a>
+    <h1>Flashcard deck: {{ deck.name }}</h1>
+    <form id="id_flashcard_form" method="post">
+        {% csrf_token %}
+        {{ formset.management_form }}
+        {% if not flashcards %}
+            <p class="badge text-bg-primary">No flashcards created yet</p>
+        {% endif %}
+        <div id="flashcard-container">
+            {% for flashcard in flashcards %}
+                <div class="row mb-3">
+                    <div class="col card me-3 mb-3 shadow">{{ flashcard.question|safe }}</div>
+                    <div class="col card mb-3 shadow">{{ flashcard.answer|safe }}</div>
+                    <div>
+                        <a
+                            class="btn btn-outline-danger delete-button"
+                            onclick="deleteExistingFlashcard(this, {{ flashcard.id }})"
+                        >Delete</a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+        <div>
+            <button type="button" class="btn btn-primary" onclick="addRow();">Add row</button>
+            <button class="btn btn-primary" type="submit">Save</button>
+        </div>
+    </form>
+
+</div>
+{% endblock content %}
+{% block script_tags %}
+    <script>
+        const csrfmiddlewaretoken = "{{ csrf_token }}";
+        const url_delete_flashcard = "{% url 'delete-flashcard' %}";
+    </script>
+    <script src="https://cdn.quilljs.com/1.3.6/quill.js"></script>
+    <script src="{% static 'js/main/create_flashcards.js' %}"></script>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'main/base.html' %}
+{% load static %}
+{% block content %}
+<h1>Create a new deck of flashcards</h1>
+<div class="main container">
+    <a href="{% url 'collection-detail' collection_id=collection.id %}">Back to collection</a>
+    <div class="row">
+        <form method="post" class="col" id="flashcards">
+            <label for="id_name">Flashcard Deck Name</label>
+            {{ form.name }}
+            <label for="id_description">Description</label>
+            {{ form.description }}
+            <div id="cards-container">
+                {% csrf_token %}
+                {{ formset.management_form }}
+                {% include 'main/new_flashcard.html' %}
+                {% include 'main/new_flashcard.html' %}
+            </div>
+            <button class="btn btn-primary btn-add" type="submit">Save</button>
+            <a class="btn btn-primary btn-add" onclick="addEditorRow();">Add row</a>
+        </form>
+
+    </div>
+</div>
+<script>
+    const new_row_url = "{% url 'new-row' %}"
+</script>
+<script src="{% static 'build/ckeditor.js' %}"></script>
+<script src="{% static 'js/main/create_flashcards.js' %}"></script>
+{% endblock content %}
